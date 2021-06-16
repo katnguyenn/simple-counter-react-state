@@ -15,11 +15,11 @@ const initialState = {
 const INCREMENT = 'INCREMENT';
 const DECREMENT = 'DECREMENT';
 
-const incrementValue = () => ({
+const increment = () => ({
   type: INCREMENT
 })
 
-const decrementValue = () => ({
+const decrement = () => ({
   type: DECREMENT
 })
 
@@ -61,11 +61,10 @@ class Counter extends Component {
 const mapStateToProps = (state) => { return state };
 
 // pointing to store.dispatch
-const mapDispatchToProps = (dispatch) => {
-  return {
-    increment() { dispatch(incrementValue()) },
-    decrement() { dispatch(decrementValue())}
-  }
+// because it's an object, we don't have to store it in a variable and can pass it in connect
+const mapDispatchToProps = {
+    increment,
+    decrement
 };
 
 
