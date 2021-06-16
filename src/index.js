@@ -12,11 +12,14 @@ const initialState = {
 
 // to avoid misspelling, we can put the actions into a variable
 // ex: const INCREMENT = 'INCREMENT' and just pass INCREMENT
+const INCREMENT = 'INCREMENT';
 
+const incrementValue = () => ({
+  type: INCREMENT
+})
 
-
-const reducer = (state, action) => {
-  if(action.type === "INCREMENT") {
+const reducer = (state = initialState, action) => {
+  if(action.type === INCREMENT) {
     return {
       count: state.count + 1
     }
@@ -24,15 +27,19 @@ const reducer = (state, action) => {
   return state;
 }
 
+
+
 const store = createStore(reducer);
 
 class Counter extends Component {
   render() {
+    const { count, increment } = this.props;
+    console.log({ count, increment });
     return (
       <main className="Counter">
-        <p classNAme="count">0</p>
+        <p className="count">{ count }</p>
         <section className="controls">
-          <button>Increment</button>
+          <button onClick={increment}>Increment</button>
           <button>Decrement</button>
           <button>Reset</button>
         </section>
@@ -41,9 +48,22 @@ class Counter extends Component {
   }
 }
 
+
+const mapStateToProps = (state) => { return state };
+
+// pointing to store.dispatch
+const mapDispatchToProps = (dispatch) => {
+  return {
+    increment() { dispatch(incrementValue()) }
+  }
+};
+
+
+const CounterContainer = connect(mapStateToProps, mapDispatchToProps)(Counter)
+
 render(
   <Provider store={store}>
-  <Counter />
+  <CounterContainer />
   </Provider>, 
   document.getElementById('root')
   
